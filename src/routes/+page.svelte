@@ -7,7 +7,31 @@
         RESET = ''
     }
 
+    const COMPUTER_LEVEL = {
+        Easy: 0.05,
+        Medium: 0.1,
+        Hard: 0.2
+    }
+
+	enum DIFFICULTY {
+		EASY = 'Easy',
+		MEDIUM = 'Medium',
+		HARD = 'Hard'
+	}
+
     let resetGame: () => void;
+    let computerLevel = COMPUTER_LEVEL.Easy;
+	let difficulty = DIFFICULTY.EASY;
+    let changeComputerLevel = (): void => {
+        if (difficulty === DIFFICULTY.EASY) {
+			difficulty = DIFFICULTY.MEDIUM;
+        } else if (difficulty === DIFFICULTY.MEDIUM) {
+			difficulty = DIFFICULTY.HARD;
+        } else {
+			difficulty = DIFFICULTY.EASY;
+        }
+		computerLevel = COMPUTER_LEVEL[difficulty];
+    };
     let winner = WINNER_STATUS.RESET;
     onMount(() => {
         const canvas = document.getElementsByTagName('canvas')[0];
@@ -138,7 +162,6 @@
         const update = () => {
             ball.x += ball.velocityX;
             ball.y += ball.velocityY;
-            let computerLevel = 0.05;
             com.y += (ball.y - (com.y + com.height / 2)) * computerLevel;
             if (
                 ball.y + ball.radius > canvas.height ||
@@ -205,11 +228,17 @@
     <canvas width="800" height="600" class="bg-gray-100" />
     <p class="text-2xl text-slate-200 my-3">{winner}</p>
     <p class="font-medium text-4xl text-gray-100 my-5">
-        Move your mouse to play
+        Move your mouse to play, first to 10 wins!
     </p>
+	<p class="text-gray-100">{ difficulty }</p>
+    <button
+        on:click={changeComputerLevel}
+        class="bg-teal-600 text-gray-100 font-medium px-4 py-2 rounded-md shadow-xl hover:bg-teal-500 transition duration-300 ease-in-out my-3"
+        >Change Computer Level
+    </button>
     <button
         on:click={resetGame}
         class="bg-teal-600 text-gray-100 font-medium px-4 py-2 rounded-md shadow-xl hover:bg-teal-500 transition duration-300 ease-in-out"
-        >Reset Game</button
-    >
+        >Reset Game
+    </button>
 </div>
