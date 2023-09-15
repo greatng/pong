@@ -226,19 +226,21 @@
         Welcome to PONG in Svelte
     </p>
     <canvas width="800" height="600" class="bg-gray-100" />
-    <p class="text-2xl text-slate-200 my-3">{winner}</p>
-    <p class="font-medium text-4xl text-gray-100 my-5">
+	<div class="flex flex-col items-center justify-evenly">
+    <p class="text-2xl text-slate-200">{winner}</p>
+    <p class="font-medium text-4xl text-gray-100 ">
         Move your mouse to play, first to 10 wins!
     </p>
-	<p class="text-gray-100">{ difficulty }</p>
+	<p class="text-gray-100 my-3">{ difficulty }</p>
     <button
         on:click={changeComputerLevel}
-        class="bg-teal-600 text-gray-100 font-medium px-4 py-2 rounded-md shadow-xl hover:bg-teal-500 transition duration-300 ease-in-out my-3"
+        class="bg-teal-600 text-gray-100 font-medium px-4 py-2 rounded-md shadow-xl hover:bg-teal-500 transition duration-300 ease-in-out my-1"
         >Change Computer Level
     </button>
     <button
         on:click={resetGame}
-        class="bg-teal-600 text-gray-100 font-medium px-4 py-2 rounded-md shadow-xl hover:bg-teal-500 transition duration-300 ease-in-out"
+        class="bg-teal-600 text-gray-100 font-medium px-4 py-2 rounded-md shadow-xl hover:bg-teal-500 transition duration-300 ease-in-out my-1"
         >Reset Game
     </button>
+</div>
 </div>
