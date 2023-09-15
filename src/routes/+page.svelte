@@ -1,49 +1,12 @@
 <script lang="ts">
+    import {
+        COMPUTER_LEVEL,
+        DIFFICULTY,
+        WINNER_STATUS,
+        type PlayerState,
+        type BallState
+    } from '$lib/index.js';
     import { onMount } from 'svelte';
-
-    enum WINNER_STATUS {
-        WON = 'You won!',
-        LOST = 'You lost!',
-        RESET = 'BATTLE!'
-    }
-
-    enum DIFFICULTY {
-        EASY = 'Easy',
-        MEDIUM = 'Medium',
-        HARD = 'Hard'
-    }
-
-	enum COMPUTER_LEVEL {
-        Easy = 0.05,
-        Medium = 0.1,
-        Hard = 0.2
-    };
-
-	type Position = {
-		top?: number;
-		bottom?: number;
-		left?: number;
-		right?: number;
-	} ;
-
-	type PlayerState = {
-		x: number;
-		y: number;
-		width: number;
-		height: number;
-		score: number;
-		color: string;
-	} & Position;
-
-	type BallState = {
-		x: number;
-		y: number;
-		radius: number;
-		velocityX: number;
-		velocityY: number;
-		speed: number;
-		color: string;
-	} & Position;
 
     let resetGame: () => void;
     let computerLevel = COMPUTER_LEVEL.Easy;
@@ -59,6 +22,7 @@
         computerLevel = COMPUTER_LEVEL[difficulty];
     };
     let winner = WINNER_STATUS.RESET;
+
     onMount(() => {
         const canvas = document.getElementsByTagName('canvas')[0];
         const ctx = canvas.getContext('2d');
@@ -259,7 +223,7 @@
     <p class="font-medium text-4xl text-gray-100 my-5">
         Welcome to PONG in Svelte
     </p>
-	<p class="text-slate-200 h-8">{winner}</p>
+    <p class="text-slate-200 h-8">{winner}</p>
     <canvas class="bg-gray-100" width="800" height="600" />
     <div class="flex flex-col items-center justify-evenly">
         <p class="font-medium text-4xl text-gray-100">
