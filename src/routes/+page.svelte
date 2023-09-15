@@ -14,7 +14,7 @@
         const ctx = canvas.getContext('2d');
         if (!ctx) throw new Error('Could not get canvas context');
 
-		const userInitalState = {
+        const userInitalState = {
             x: 0,
             y: (canvas.height - 100) / 2,
             width: 10,
@@ -23,14 +23,14 @@
             color: 'WHITE'
         };
 
-		const comInitalState = {
-			x: canvas.width - 10,
-			y: (canvas.height - 100) / 2,
-			width: 10,
-			height: 100,
-			score: 0,
-			color: '#E74C3C'
-		};
+        const comInitalState = {
+            x: canvas.width - 10,
+            y: (canvas.height - 100) / 2,
+            width: 10,
+            height: 100,
+            score: 0,
+            color: '#E74C3C'
+        };
 
         const ball = {
             x: canvas.width / 2,
@@ -41,8 +41,8 @@
             speed: 5,
             color: '#FFD700'
         };
-        let user = {...userInitalState}
-        let com = {...comInitalState}
+        let user = { ...userInitalState };
+        let com = { ...comInitalState };
         const net = {
             x: (canvas.width - 2) / 2,
             y: 0,
@@ -52,8 +52,8 @@
         };
 
         resetGame = () => {
-            com = {...comInitalState}
-			user = {...userInitalState}
+            com = { ...comInitalState };
+            user = { ...userInitalState };
             resetBall();
         };
 
@@ -67,6 +67,21 @@
             ctx.fillStyle = color;
             ctx.fillRect(x, y, w, h);
         };
+
+        const drawRectWithGradient = (
+            x: number,
+            y: number,
+            w: number,
+            h: number
+        ) => {
+            const gradient = ctx.createLinearGradient(0, 0, w, h);
+            gradient.addColorStop(0, '#205072');
+            gradient.addColorStop(0.5, '#329D9C');
+            gradient.addColorStop(1, '#56C596');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(x, y, w, h);
+        };
+
         const drawArc = (x: number, y: number, r: number, color: string) => {
             ctx.fillStyle = color;
             ctx.beginPath();
@@ -85,7 +100,7 @@
             ctx.fillText(text.toString(), x, y);
         };
         const render = () => {
-            drawRect(0, 0, canvas.width, canvas.height, 'BLACK');
+            drawRectWithGradient(0, 0, canvas.width, canvas.height);
             drawText(user.score, 50, canvas.height - 100, '#222');
             drawText(
                 com.score,
@@ -132,6 +147,7 @@
                 ball.velocityY = -ball.velocityY;
             }
             let player = ball.x < canvas.width / 2 ? user : com;
+
             if (collision(ball, player)) {
                 let collidePoint = ball.y - (player.y + player.height / 2);
                 collidePoint = collidePoint / (player.height / 2);
@@ -150,13 +166,15 @@
             }
 
             if (user.score === 10 || com.score === 10) {
+                const WINNER_TIMEOUT = 10000;
+
                 alert('Game Over');
                 winner =
                     user.score === 10 ? WINNER_STATUS.WON : WINNER_STATUS.LOST;
                 resetGame();
                 setTimeout(() => {
                     winner = WINNER_STATUS.RESET;
-                }, 10000);
+                }, WINNER_TIMEOUT);
             }
         };
         const game = () => {
@@ -191,7 +209,7 @@
     </p>
     <button
         on:click={resetGame}
-        class="bg-teal-600 text-gray-100 font-medium px-4 py-2 rounded-md shadow-lg"
+        class="bg-teal-600 text-gray-100 font-medium px-4 py-2 rounded-md shadow-xl hover:bg-teal-500 transition duration-300 ease-in-out"
         >Reset Game</button
     >
 </div>
