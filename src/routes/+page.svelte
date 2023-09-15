@@ -4,20 +4,46 @@
     enum WINNER_STATUS {
         WON = 'You won!',
         LOST = 'You lost!',
-        RESET = ''
+        RESET = 'BATTLE!'
     }
-
-    const COMPUTER_LEVEL = {
-        Easy: 0.05,
-        Medium: 0.1,
-        Hard: 0.2
-    };
 
     enum DIFFICULTY {
         EASY = 'Easy',
         MEDIUM = 'Medium',
         HARD = 'Hard'
     }
+
+	enum COMPUTER_LEVEL {
+        Easy = 0.05,
+        Medium = 0.1,
+        Hard = 0.2
+    };
+
+	type Position = {
+		top?: number;
+		bottom?: number;
+		left?: number;
+		right?: number;
+	} ;
+
+	type PlayerState = {
+		x: number;
+		y: number;
+		width: number;
+		height: number;
+		score: number;
+		color: string;
+	} & Position;
+
+	type BallState = {
+		x: number;
+		y: number;
+		radius: number;
+		velocityX: number;
+		velocityY: number;
+		speed: number;
+		color: string;
+	} & Position;
 
     let resetGame: () => void;
     let computerLevel = COMPUTER_LEVEL.Easy;
@@ -38,7 +64,7 @@
         const ctx = canvas.getContext('2d');
         if (!ctx) throw new Error('Could not get canvas context');
 
-        const userInitalState = {
+        const userInitalState: PlayerState = {
             x: 0,
             y: (canvas.height - 100) / 2,
             width: 10,
@@ -47,7 +73,7 @@
             color: 'WHITE'
         };
 
-        const comInitalState = {
+        const comInitalState: PlayerState = {
             x: canvas.width - 10,
             y: (canvas.height - 100) / 2,
             width: 10,
@@ -56,7 +82,7 @@
             color: '#E74C3C'
         };
 
-        const ball = {
+        const ball: BallState = {
             x: canvas.width / 2,
             y: canvas.height / 2,
             radius: 20,
@@ -137,7 +163,7 @@
             drawRect(com.x, com.y, com.width, com.height, com.color);
             drawArc(ball.x, ball.y, ball.radius, ball.color);
         };
-        const collision = (b: any, p: any) => {
+        const collision = (b: BallState, p: PlayerState) => {
             b.top = b.y - b.radius;
             b.bottom = b.y + b.radius;
             b.left = b.x - b.radius;
