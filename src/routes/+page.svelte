@@ -11,26 +11,26 @@
         Easy: 0.05,
         Medium: 0.1,
         Hard: 0.2
-    }
+    };
 
-	enum DIFFICULTY {
-		EASY = 'Easy',
-		MEDIUM = 'Medium',
-		HARD = 'Hard'
-	}
+    enum DIFFICULTY {
+        EASY = 'Easy',
+        MEDIUM = 'Medium',
+        HARD = 'Hard'
+    }
 
     let resetGame: () => void;
     let computerLevel = COMPUTER_LEVEL.Easy;
-	let difficulty = DIFFICULTY.EASY;
+    let difficulty = DIFFICULTY.EASY;
     let changeComputerLevel = (): void => {
         if (difficulty === DIFFICULTY.EASY) {
-			difficulty = DIFFICULTY.MEDIUM;
+            difficulty = DIFFICULTY.MEDIUM;
         } else if (difficulty === DIFFICULTY.MEDIUM) {
-			difficulty = DIFFICULTY.HARD;
+            difficulty = DIFFICULTY.HARD;
         } else {
-			difficulty = DIFFICULTY.EASY;
+            difficulty = DIFFICULTY.EASY;
         }
-		computerLevel = COMPUTER_LEVEL[difficulty];
+        computerLevel = COMPUTER_LEVEL[difficulty];
     };
     let winner = WINNER_STATUS.RESET;
     onMount(() => {
@@ -206,11 +206,19 @@
         };
         const fps = 60;
         setInterval(game, 1000 / fps);
-        const movePaddle = (e: MouseEvent) => {
+        const movePaddle = (e: MouseEvent | TouchEvent) => {
             let rect = canvas.getBoundingClientRect();
-            user.y = e.clientY - rect.top - user.height / 2;
+            if (e instanceof MouseEvent) {
+                user.y = e.clientY - rect.top - user.height / 2;
+            } else {
+                const touch = e.changedTouches;
+                for (let i = 0; i < touch.length; i++) {
+                    user.y = touch[i].clientY - rect.top - user.height / 2;
+                }
+            }
         };
         canvas.addEventListener('mousemove', movePaddle);
+        canvas.addEventListener('touchmove', movePaddle);
         const drawNet = () => {
             for (let i = 0; i <= canvas.height; i += 15) {
                 drawRect(net.x, net.y + i, net.width, net.height, net.color);
@@ -225,22 +233,22 @@
     <p class="font-medium text-4xl text-gray-100 my-5">
         Welcome to PONG in Svelte
     </p>
-    <canvas width="800" height="600" class="bg-gray-100" />
-	<div class="flex flex-col items-center justify-evenly">
-    <p class="text-2xl text-slate-200">{winner}</p>
-    <p class="font-medium text-4xl text-gray-100 ">
-        Move your mouse to play, first to 10 wins!
-    </p>
-	<p class="text-gray-100 my-3">{ difficulty }</p>
-    <button
-        on:click={changeComputerLevel}
-        class="bg-teal-600 text-gray-100 font-medium px-4 py-2 rounded-md shadow-xl hover:bg-teal-500 transition duration-300 ease-in-out my-1"
-        >Change Computer Level
-    </button>
-    <button
-        on:click={resetGame}
-        class="bg-teal-600 text-gray-100 font-medium px-4 py-2 rounded-md shadow-xl hover:bg-teal-500 transition duration-300 ease-in-out my-1"
-        >Reset Game
-    </button>
-</div>
+	<p class="text-2xl text-slate-200 h-5">{winner}</p>
+    <canvas class="bg-gray-100" width="800" height="600" />
+    <div class="flex flex-col items-center justify-evenly">
+        <p class="font-medium text-4xl text-gray-100">
+            Move your mouse to play, first to 10 wins!
+        </p>
+        <p class="text-gray-100 my-3">{difficulty}</p>
+        <button
+            on:click={changeComputerLevel}
+            class="bg-teal-600 text-gray-100 font-medium px-4 py-2 rounded-md shadow-xl hover:bg-teal-500 transition duration-300 ease-in-out my-1"
+            >Change Computer Level
+        </button>
+        <button
+            on:click={resetGame}
+            class="bg-teal-600 text-gray-100 font-medium px-4 py-2 rounded-md shadow-xl hover:bg-teal-500 transition duration-300 ease-in-out my-1"
+            >Reset Game
+        </button>
+    </div>
 </div>
