@@ -5,7 +5,7 @@
         WINNER_STATUS,
         type PlayerState,
         type BallState
-    } from '$lib/index.js';
+    } from '$lib/page.model.js';
     import { onMount } from 'svelte';
 
     let resetGame: () => void;
