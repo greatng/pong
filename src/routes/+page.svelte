@@ -259,7 +259,7 @@
     <p class="font-medium text-4xl text-gray-100 my-5">
         Welcome to PONG in Svelte
     </p>
-	<p class="text-2xl text-slate-200 h-5">{winner}</p>
+	<p class="text-slate-200 h-8">{winner}</p>
     <canvas class="bg-gray-100" width="800" height="600" />
     <div class="flex flex-col items-center justify-evenly">
         <p class="font-medium text-4xl text-gray-100">
