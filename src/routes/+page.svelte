@@ -1,3 +1,31 @@
+<div
+    class="flex flex-col items-center w-screen h-screen bg-slate-700 justify-center"
+>
+    <p class="font-medium text-4xl text-gray-100 my-5">
+        Welcome to PONG in Svelte
+    </p>
+    <p class="text-slate-200 h-8">{winner}</p>
+    <canvas class="bg-gray-100" width="800" height="600" />
+    <div class="flex flex-col items-center justify-evenly">
+        <p class="font-medium text-4xl text-gray-100">
+            Move your mouse to play, first to 10 wins!
+        </p>
+        <p class="text-gray-100 my-3">{difficulty}</p>
+        <button
+            on:click={changeComputerLevel}
+            class="bg-teal-600 text-gray-100 font-medium px-4 py-2 rounded-md shadow-xl
+			hover:bg-teal-500 transition duration-300 ease-in-out my-1"
+            >Change Computer Level
+        </button>
+        <button
+            on:click={resetGame}
+            class="bg-teal-600 text-gray-100 font-medium px-4 py-2 rounded-md shadow-xl
+			hover:bg-teal-500 transition duration-300 ease-in-out my-1"
+            >Reset Game
+        </button>
+    </div>
+</div>
+
 <script lang="ts">
     import {
         COMPUTER_LEVEL,
@@ -159,13 +187,13 @@
             ) {
                 ball.velocityY = -ball.velocityY;
             }
-            let player = ball.x < canvas.width / 2 ? user : com;
+            const player = ball.x < canvas.width / 2 ? user : com;
 
             if (collision(ball, player)) {
                 let collidePoint = ball.y - (player.y + player.height / 2);
                 collidePoint = collidePoint / (player.height / 2);
-                let angleRad = (Math.PI / 4) * collidePoint;
-                let direction = ball.x < canvas.width / 2 ? 1 : -1;
+                const angleRad = (Math.PI / 4) * collidePoint;
+                const direction = ball.x < canvas.width / 2 ? 1 : -1;
                 ball.velocityX = direction * ball.speed * Math.cos(angleRad);
                 ball.velocityY = ball.speed * Math.sin(angleRad);
                 ball.speed += 0.1;
@@ -216,29 +244,3 @@
         };
     });
 </script>
-
-<div
-    class="flex flex-col items-center w-screen h-screen bg-slate-700 justify-center"
->
-    <p class="font-medium text-4xl text-gray-100 my-5">
-        Welcome to PONG in Svelte
-    </p>
-    <p class="text-slate-200 h-8">{winner}</p>
-    <canvas class="bg-gray-100" width="800" height="600" />
-    <div class="flex flex-col items-center justify-evenly">
-        <p class="font-medium text-4xl text-gray-100">
-            Move your mouse to play, first to 10 wins!
-        </p>
-        <p class="text-gray-100 my-3">{difficulty}</p>
-        <button
-            on:click={changeComputerLevel}
-            class="bg-teal-600 text-gray-100 font-medium px-4 py-2 rounded-md shadow-xl hover:bg-teal-500 transition duration-300 ease-in-out my-1"
-            >Change Computer Level
-        </button>
-        <button
-            on:click={resetGame}
-            class="bg-teal-600 text-gray-100 font-medium px-4 py-2 rounded-md shadow-xl hover:bg-teal-500 transition duration-300 ease-in-out my-1"
-            >Reset Game
-        </button>
-    </div>
-</div>

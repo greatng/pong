@@ -20,7 +20,7 @@ module.exports = {
     },
     overrides: [
         {
-            files: ['*.svelte'],
+            files: ['*.svelte', '*.ts'],
             parser: 'svelte-eslint-parser',
             parserOptions: {
                 parser: '@typescript-eslint/parser'
@@ -43,6 +43,12 @@ module.exports = {
         'newline-before-return': 'on',
         'newline-after-var': 'on',
         'no-var': 'on',
-        'prefer-const': 'on'
+        'prefer-const': 'on',
+        'space-before-function-paren': 'on',
+        'space-before-blocks': 'on',
+        'space-in-parens': 'on',
+        'space-infix-ops': 'on',
+        'space-unary-ops': 'on',
+        'spaced-comment': 'on'
     }
 };
