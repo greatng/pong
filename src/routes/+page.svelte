@@ -52,7 +52,7 @@
       radius: 20,
       velocityX: 5,
       velocityY: 5,
-      speed: 5,
+      speed: 10,
       color: '#FFD700',
     };
 
@@ -161,6 +161,8 @@
       if (user.score === 10 || com.score === 10) {
         const WINNER_TIMEOUT = 10000;
 
+        console.log('Game Over', user.score, com.score);
+
         alert('Game Over');
         winner = user.score === 10 ? WINNER_STATUS.WON : WINNER_STATUS.LOST;
         resetGame();
@@ -172,9 +174,10 @@
     const game = () => {
       update();
       render();
+      requestAnimationFrame(game);
     };
-    const fps = 60;
-    setInterval(game, 1000 / fps);
+
+    requestAnimationFrame(game);
 
     const movePaddle = (e: MouseEvent | TouchEvent) => {
       e.preventDefault();
