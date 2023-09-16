@@ -3,3 +3,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+canvas {
+  @media screen and (max-width: 768px) {
+    width: 90vw;
+    height: calc(90vw * 0.75);
+  }
+
+  @media screen and (min-width: 800px) and (min-height: 600px) {
+    width: 80vw;
+    max-width: 800px;
+    max-height: 600px;
+    height: calc(80vw * 0.75);
+  }
+}
